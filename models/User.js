@@ -3,10 +3,10 @@ const {Schema, model} = require('mongoose')
 const Profile = require('./Profile');
 
 const userSchema = new Schema({
-    name:{
+    userName:{
         type: String,
         trim: true,
-        maxlength: 30,
+        maxlength: 15,
         required: true
     },
     email:{
