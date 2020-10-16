@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card card-body">
-                <h4>Create New Account</h4>
+                <h4 class="mb-3">Create New Account</h4>
                 <form action="/auth/signUp" method="POST">
                     <div class="form-group">
                         <label for="userName">Enter Unique Username</label>
@@ -24,6 +24,9 @@
                     </div>
                     <input type="submit" class="btn btn-primary" value="Create">
                 </form>
+                <div class="pt-3 text-center">
+                    <span>Already have an Account ? </span> <a href="/auth/login">Login Here</a>
+                </div>
             </div>
         </div>
     </div>

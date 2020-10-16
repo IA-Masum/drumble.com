@@ -33,10 +33,39 @@ const signUp = async (req, res, next) => {
 
 const getLoginPage = (req, res, next) => {
 
+    res.render('pages/auth/login.ejs', {pageTitle: 'Log In'});
+
 }
 
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
+
+    let{email, password} = req.body
+
+    try {
+
+       let user = await User.findOne({email})
+       if(!user){
+          return res.json({
+               message: 'Invalid Information'
+           })
+       }
+
+       let match = await bcrypt.compare(password, user.password)
+       if(!match){
+           return res.json({
+               message: 'Invalid Information'
+           })
+       }
+
+       console.log(user)
+
+       res.render('pages/auth/login.ejs', {pageTitle: 'Log In'});
+
+    }catch (e) {
+        console.log(e)
+        next(e)
+    }
 
 }
 
