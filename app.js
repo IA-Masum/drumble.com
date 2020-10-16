@@ -6,6 +6,10 @@ const mongoose = require('mongoose')
 //import routes
 const autRoute = require('./routes/authRoute');
 
+
+//PlayGround should be removed
+const validatorRoute = require('./playground/validator');
+
 const app = express()
 
 
@@ -28,6 +32,10 @@ app.use(middlewares)
 app.use('/auth', autRoute)
 
 
+//playgrounds should be removed
+app.use('/playground', validatorRoute);
+
+
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(
@@ -37,7 +45,7 @@ mongoose.connect(
     .then(() => {
         app.listen(PORT, () => {
             console.log('Db Connection Successful!');
-            console.log(`Server is Running : http:localhost:${PORT}`)
+            console.log(`Server is Running : http://localhost:${PORT}`)
         })
     })
     .catch(err => {
