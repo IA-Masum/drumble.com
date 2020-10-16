@@ -1,9 +1,13 @@
 const express = require('express')
-const morgan = require('morgan');
+const morgan = require('morgan')
+const mongoose = require('mongoose')
+
+
+//import routes
+const autRoute = require('./routes/authRoute');
 
 const app = express()
 
-const router = require('./routes/authRoute');
 
 //Set View Engine
 app.set('view engine', 'ejs');
@@ -11,7 +15,7 @@ app.set('views', 'views');
 
 
 //middleware
-const middlewares  = [
+const middlewares = [
     morgan('dev'),
     express.static('public'),
     express.urlencoded({extended: true}),
@@ -21,8 +25,22 @@ const middlewares  = [
 
 app.use(middlewares)
 
-app.use('/auth', router)
+app.use('/auth', autRoute)
 
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server is Running : http:localhost:${PORT}`))
+
+mongoose.connect(
+    `mongodb+srv://Imran_ali:kBDDbrdXC3vT55k@cluster0.wkjey.mongodb.net/drumble?retryWrites=true";`,
+    {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}
+)
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log('Db Connection Successful!');
+            console.log(`Server is Running : http:localhost:${PORT}`)
+        })
+    })
+    .catch(err => {
+        return console.log(err)
+    })
+
