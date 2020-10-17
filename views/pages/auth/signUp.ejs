@@ -8,19 +8,33 @@
                 <form action="/auth/signUp" method="POST">
                     <div class="form-group">
                         <label for="userName">Enter Unique Username</label>
-                        <input type="text" class="form-control" name="userName" id="userName">
+                        <input type="text" name="userName" id="userName"
+                               class="form-control <%= errors.userName && 'is-invalid' %>"
+                               value="<%= values.userName && values.userName %>"
+                        >
+                        <div class="invalid-feedback"><%= errors.userName && errors.userName %></div>
                     </div>
                     <div class="form-group">
                         <label for="email">Enter Your Email</label>
-                        <input type="text" class="form-control" name="email" id="email">
+                        <input type="text" name="email" id="email"
+                               class="form-control <%= errors.email && 'is-invalid' %>"
+                               value="<%= values.email && values.email %>"
+                        >
+                        <div class="invalid-feedback"><%= errors.email && errors.email %></div>
                     </div>
                     <div class="form-group">
                         <label for="password">Enter Strong Password</label>
-                        <input type="password" class="form-control" name="password" id="password">
+                        <input type="password" name="password" id="password"
+                               class="form-control <%= errors.password && 'is-invalid' %>"
+                               value="<%= values.password && values.password %>"
+                        >
+                        <div class="invalid-feedback"><%= errors.password && errors.password %></div>
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
+                        <input type="password" name="confirmPassword" id="confirmPassword"
+                               class="form-control <%= errors.confirmPassword && 'is-invalid' %>">
+                        <div class="invalid-feedback"><%= errors.confirmPassword && errors.confirmPassword %></div>
                     </div>
                     <input type="submit" class="btn btn-primary" value="Create">
                 </form>

@@ -7,9 +7,6 @@ const mongoose = require('mongoose')
 const autRoute = require('./routes/authRoute');
 
 
-//PlayGround should be removed
-const validatorRoute = require('./playground/validator');
-
 const app = express()
 
 
@@ -30,10 +27,6 @@ const middlewares = [
 app.use(middlewares)
 
 app.use('/auth', autRoute)
-
-
-//playgrounds should be removed
-app.use('/playground', validatorRoute);
 
 
 const PORT = process.env.PORT || 3000;
