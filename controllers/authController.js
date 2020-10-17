@@ -4,19 +4,21 @@ const {validationResult} = require('express-validator');
 
 const User = require('../models/User')
 
-const validatorMessageFormater = require('../utils/validatorMessageFormater');
+const validatorMessageFormatter = require('../utils/validatorMessageFormatter');
+
 
 const getSignUpPage = (req, res, next) => {
 
-    res.render('pages/auth/signUp.ejs', {pageTitle: "Create New Account", errors: {}, values:{}})
+    res.render('pages/auth/signUp.ejs', {pageTitle: "Create New Account", errors: {}, values: {}})
 
 }
+
 
 const signUp = async (req, res, next) => {
 
     let {userName, email, password} = req.body
 
-    let errors = validationResult(req).formatWith(validatorMessageFormater)
+    let errors = validationResult(req).formatWith(validatorMessageFormatter)
 
     if (!errors.isEmpty()) {
         return res.render('pages/auth/signUp.ejs', {
@@ -46,7 +48,7 @@ const signUp = async (req, res, next) => {
 
 const getLoginPage = (req, res, next) => {
 
-    res.render('pages/auth/login.ejs', {pageTitle: 'Log In'});
+    res.render('pages/auth/login.ejs', {pageTitle: 'Log In', errors: {}});
 
 }
 
@@ -55,25 +57,30 @@ const login = async (req, res, next) => {
 
     let {email, password} = req.body
 
+    let errors = validationResult(req).formatWith(validatorMessageFormatter)
+
+    if (!errors.isEmpty()) {
+        return res.render('pages/auth/login.ejs', {pageTitle: 'Log In', errors: errors.mapped()});
+    }
+
     try {
 
         let user = await User.findOne({email})
-        if (!user) {
-            return res.json({
-                message: 'Invalid Information'
-            })
+        let match = false;
+        if (user) {
+            match = await bcrypt.compare(password, user.password)
         }
 
-        let match = await bcrypt.compare(password, user.password)
-        if (!match) {
-            return res.json({
-                message: 'Invalid Information'
-            })
+        if (!user || !match) {
+            return res.render('pages/auth/login.ejs', {
+                pageTitle: 'Log In', errors: {
+                    email: "Invalid Information!", password: "Invalid Information!"
+                }
+            });
         }
 
-        console.log(user)
 
-        res.render('pages/auth/login.ejs', {pageTitle: 'Log In'});
+        res.render('pages/auth/login.ejs', {pageTitle: 'Log In', errors:{}});
 
     } catch (e) {
         console.log(e)

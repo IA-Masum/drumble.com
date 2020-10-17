@@ -8,12 +8,18 @@
                 <form action="/auth/login" method="POST">
 
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email">
+                        <label for="email">Enter Your Email</label>
+                        <input type="text" name="email" id="email"
+                               class="form-control <%= errors.email && 'is-invalid' %>"
+                        >
+                        <div class="invalid-feedback"><%= errors.email && errors.email %></div>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" id="password">
+                        <label for="password">Enter Strong Password</label>
+                        <input type="password" name="password" id="password"
+                               class="form-control <%= errors.password && 'is-invalid' %>"
+                        >
+                        <div class="invalid-feedback"><%= errors.password && errors.password %></div>
                     </div>
                     <input type="submit" class="btn btn-primary" value="Log In">
                 </form>

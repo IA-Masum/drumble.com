@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 //Import Validators
-const {signUpValidator} = require('../validators/authValidators')
+const {signUpValidator, logInValidator} = require('../validators/authValidators')
 
 // Import Controllers
 const {getSignUpPage, signUp, getLoginPage, login, logout} = require('../controllers/authController')
@@ -10,7 +10,7 @@ const {getSignUpPage, signUp, getLoginPage, login, logout} = require('../control
 router.get('/signUp', getSignUpPage)
 router.post('/signUp',signUpValidator, signUp)
 router.get('/login', getLoginPage)
-router.post('/login', login)
+router.post('/login',logInValidator, login)
 router.get('/logout', logout)
 
 

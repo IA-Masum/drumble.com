@@ -32,7 +32,7 @@ app.use('/auth', autRoute)
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(
-    `mongodb+srv://Imran_ali:kBDDbrdXC3vT55k@cluster0.wkjey.mongodb.net/drumble?retryWrites=true";`,
+    `mongodb+srv://Imran_ali:kBDDbrdXC3vT55k@cluster0.wkjey.mongodb.net/drumble?retryWrites=true&w=majority";`,
     {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}
 )
     .then(() => {

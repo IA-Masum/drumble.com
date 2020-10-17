@@ -41,6 +41,17 @@ const signUpValidator = [
 ]
 
 
+const logInValidator = [
+    body('email')
+        .not().isEmpty().withMessage('Email Should Not be Empty!')
+        .isEmail().withMessage('Please Enter Valid Email!')
+        .normalizeEmail(),
+
+    body('password')
+        .not().isEmpty().withMessage('Password Should Not be Empty!')
+]
+
+
 module.exports = {
-    signUpValidator
+    signUpValidator, logInValidator
 }
