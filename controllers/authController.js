@@ -47,6 +47,7 @@ const signUp = async (req, res, next) => {
 }
 
 const getLoginPage = (req, res, next) => {
+    console.log(req.session.isLoggedIn, req.session.user)
 
     res.render('pages/auth/login.ejs', {pageTitle: 'Log In', errors: {}});
 
@@ -78,9 +79,16 @@ const login = async (req, res, next) => {
                 }
             });
         }
+        req.session.isLoggedIn = true
+        req.session.user = user
+        req.session.save(err => {
+            if(err){
+                console.log(errr)
+                next(err)
+            }
+            res.redirect('/dashboard')
+        })
 
-
-        res.render('pages/auth/login.ejs', {pageTitle: 'Log In', errors:{}});
 
     } catch (e) {
         console.log(e)
@@ -90,6 +98,15 @@ const login = async (req, res, next) => {
 }
 
 const logout = (req, res, next) => {
+
+    req.session.destroy(err => {
+        if(err){
+            console.log(err)
+            return next(err)
+        }
+
+        res.redirect('/auth/logIn')
+    })
 
 }
 
